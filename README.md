@@ -4,7 +4,8 @@ Texte 1 : affine
 
 Texte 2 : Vigenere
 
-Texte 3 : 
+Texte 3 : Hill (matrice (2  3))
+                        (1  5)
 
 Texte 4 : Cesar
 
