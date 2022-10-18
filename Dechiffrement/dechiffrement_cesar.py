@@ -47,8 +47,18 @@ def essaie_decriptage_cle(texte_chiffre):
     bon_mot = False
     for indice_decal in range(1,26):
         res = dechiffrement_cle_decalage(texte_chiffre,indice_decal)
-        if (compter_nb_mots_francais(separer_mots(res),"francais.txt") > (len(separer_mots(res))/3)):
+        if (compter_nb_mots_francais(separer_mots(res),"Utilitaires/francais.txt") > (len(separer_mots(res))/3)):
             return res
     return "Erreur: Ce texte n'est pas crypté avec le chiffrement de César"            
+
+def main():
+    continuer = True
+    while continuer:
+        texte = input("\n\n\n         Entrez le texte à déchiffrer:      \n\n\n")
+        print(essaie_decriptage_cle("\n\n"+texte+"\n\n"))
+        continuer = input("Voulez-vous continuer? (O/N) ") != "N"
+    
+if __name__ == "__main__":
+    main()
         
-            
+        
