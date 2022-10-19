@@ -1,32 +1,31 @@
+from cmath import sqrt
 import string
 
 
 
 texte_chiffre = "Zc krgfkr u'le ufzxk le rzi drikzrc jli c'fscfex tyrjjzj ul mrjzjkrj.Zc flmizk jfe wizxf dlirc, zc gizk ul crzk wifzu, zc slk le xireu sfc. Zc j'rgrzjrzk. Zc j'rjjzk jli jfe tfjp, zc gizk le aflierc hl'zc gritflilk u'le rzi uzjkirzk. Zc rccldr le tzxrizccf hl'zc wldr aljhl'rl sflk hlfzhl'zc kiflmrk jfe griwld ziizkrek. Zc kfljjr."
+alphaMap = {"A":8.4,"B":1.05,"C":3.03,"D":4.18,"E":17.26,"F":1.12,"G":1.27,"H":0.92,"I":7.34,"J":0.31,"K":0.05,"L":6.01,"M":2.96,"N":7.13,"O":5.26,"P":3.01,"Q":0.99,"R":6.55,"S":5.08,"T":7.07,"U":5.74,"V":1.32,"W":0.04,"X":0.45,"Y":0.30,"Z":0.12}
+alpha = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"]
 
-def separer_mots(texte):
-    # Separe les mots d'un texte dans une liste
-    mot_actuelle = ""
-    alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
-    res = list()
+def dic_freq(texte):
+    dic = {}
+    texte = texte.upper()
+    for lettre in alpha:
+        dic[lettre] = 0
+    
     for lettre in texte:
-        if lettre in alphabet:
-            mot_actuelle += lettre
-        elif mot_actuelle != "":
-            res.append(mot_actuelle)
-            mot_actuelle = ""
-    return res
-
-def compter_nb_mots_francais(liste_de_mots,dictionnaire):
-    with open(dictionnaire, encoding="utf-8") as file:
-        words = set(line.strip() for line in file)
-    nb_mots = 0
-    for mots in liste_de_mots:
-        mot = str.lower(mots)
-        if mot in words:
-            nb_mots+= 1
-    return nb_mots
-
+        if lettre in alpha:
+            dic[lettre] += 1
+    for lettre in dic:
+        dic[lettre] = dic[lettre]/len(texte)*100
+    return dic
+    
+def distanceFreq(texte:string):
+    freq = dic_freq(texte)
+    distance = 0
+    for lettre in alpha:
+        distance += abs(freq[lettre] - alphaMap[lettre])
+    return distance
 
 
 def dechiffrement_cle_decalage(texte_chiffre, cle_decalage):
@@ -43,13 +42,16 @@ def dechiffrement_cle_decalage(texte_chiffre, cle_decalage):
 
 def essaie_decriptage_cle(texte_chiffre):
     res = ""
-    indice_decal = 1
-    bon_mot = False
+    distance_min = distanceFreq(texte_chiffre)
+    decal_min = 0
     for indice_decal in range(1,26):
         res = dechiffrement_cle_decalage(texte_chiffre,indice_decal)
-        if (compter_nb_mots_francais(separer_mots(res),"Utilitaires/francais.txt") > (len(separer_mots(res))/3)):
-            return res
-    return "Erreur: Ce texte n'est pas crypté avec le chiffrement de César"            
+        distance = distanceFreq(res)
+        if distance < distance_min:
+            distance_min = distance
+            decal_min = indice_decal
+    return dechiffrement_cle_decalage(texte_chiffre,decal_min%26)
+
 
 def main():
     continuer = True
