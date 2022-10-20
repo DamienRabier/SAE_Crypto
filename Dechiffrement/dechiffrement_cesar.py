@@ -57,8 +57,12 @@ def main():
     continuer = True
     while continuer:
         texte = input("\n\n\n         Entrez le texte à déchiffrer:      \n\n\n")
+        print("\n\n\n")
+    
         print(essaie_decriptage_cle("\n\n"+texte+"\n\n"))
-        continuer = input("Voulez-vous continuer? (O/N) ") != "N"
+        print("\n\n\n")
+        
+        continuer = input("Voulez-vous continuer? (O/N) ").upper() != "N"
     
 if __name__ == "__main__":
     main()
