@@ -13,7 +13,7 @@ liste_T = [texte_1, texte_2, texte_4]
 
 
 def liste_dechiffrement(texte):
-    dechiffrement = [vigenere_inverse(texte,recherche_mot_cle(texte,longueur_cle(texte))),essaie_decriptage_cle("\n\n"+texte+"\n\n"),decoder_affine(texte,clé_affine(texte)[0],clé_affine(texte)[1])]
+    dechiffrement = [vigenere_inverse(texte,recherche_mot_cle(texte,longueur_cle(texte))),essaie_decriptage_cle("\n\n"+texte+"\n\n")]
     return dechiffrement
 
     
@@ -38,16 +38,16 @@ def main():
     print("-------------------------------------------------------------")
     choix = input("Entrez votre choix : ")
     if choix == "1":
-        dictionnaire_reponse ={texte_1 : None, texte_2 : None, texte_3 : None, texte_4 : None, texte_5 : None}
+        dictionnaire_reponse ={"texte_1" : None, "texte_2" : None, "texte_3" : None, "texte_4" : None, "texte_5" : None}
         t= 0
-        # Tant que le texte ne comporte pas plus de trois mots dans le dictionnaire francais Utilitaires/francais.txt, on continue à déchiffrer
         for i in range(len(liste_T)):
             listD = liste_dechiffrement(liste_T[i])
-            while(compter_nb_mots_francais(separer_mots(listD[t])),"Utilitaires/francais.txt") < (len(separer_mots(listD[t])) / 3):
+            print(compter_nb_mots_francais(separer_mots(listD[0])))
+            while(compter_nb_mots_francais(separer_mots(listD[t])) < 3):
                 t+=1
             dictionnaire_reponse[liste_T[i]] = listD[t]
             t=0
-        print(dictionnaire_reponse)
+    print(dictionnaire_reponse)
                 
                 
     
