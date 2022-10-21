@@ -44,11 +44,7 @@ def main():
         # Tant que le texte ne comporte pas plus de trois mots dans le dictionnaire francais Utilitaires/francais.txt, on continue à déchiffrer
         for i in range(len(liste_T)):
             while(compter_nb_mots_francais(separer_mots(liste_T[t]),"Utilitaires/francais.txt") < (len(separer_mots(liste_T[t])) / 3)):
-                listD = liste_dechiffrement(liste_T[t])
-                i += 1
-                if i == 3:
-                    i = 0
-                    t += 1
+                
     
     
 
