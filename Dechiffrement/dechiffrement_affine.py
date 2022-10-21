@@ -55,7 +55,7 @@ def clé_affine(texte):
     b_neg = 0
     texte_a_decode = texte
     texte_a_decode_neg = texte
-    while(compter_nb_mots_francais(separer_mots(texte_a_decode)) < (len(separer_mots(texte_a_decode)) / 3) and (compter_nb_mots_francais(separer_mots(texte_a_decode_neg)) < (len(separer_mots(texte_a_decode_neg)) / 3))):
+    while(compter_nb_mots_francais(separer_mots(texte_a_decode),"Utilitaires/francais.txt") < (len(separer_mots(texte_a_decode)) / 3) and (compter_nb_mots_francais(separer_mots(texte_a_decode_neg),"Utilitaires/francais.txt") < (len(separer_mots(texte_a_decode_neg)) / 3))):
         if b >= 25:
             a += 1
             while modinv(a) == "l'inverse modulaire n'existe pas":
@@ -70,9 +70,9 @@ def clé_affine(texte):
         b_neg = b_neg - 1
         texte_a_decode = decoder_affine(texte,a,b)
         texte_a_decode_neg = decoder_affine(texte,a_neg,b_neg)
-    if compter_nb_mots_francais(separer_mots(texte_a_decode)) > (len(separer_mots(texte_a_decode)) / 3):
+    if compter_nb_mots_francais(separer_mots(texte_a_decode),"Utilitaires/francais.txt") > (len(separer_mots(texte_a_decode)) / 3):
         return (a,b)
-    if compter_nb_mots_francais(separer_mots(texte_a_decode_neg)) > (len(separer_mots(texte_a_decode_neg)) / 3):
+    if compter_nb_mots_francais(separer_mots(texte_a_decode_neg),"Utilitaires/francais.txt") > (len(separer_mots(texte_a_decode_neg)) / 3):
         return (a_neg,b_neg)
     
 print(a := clé_affine(text_a_decoder_1))
