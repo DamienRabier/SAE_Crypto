@@ -1,4 +1,6 @@
 text_a_decoder_1 = "Huyzu Izxk u'hoovihvy eht h wzopvo. Vk hkkdph. Tzu Ahc phojdhvy pvudvy ivuly. Vk ezdtth du eozgzuw tzdevo, t'httvy whut tzu kvy, t'heedxhuy tdo tzu ezkzrqzu. Vk eovy du ozphu, vk k'zdiovy, vk kdy; phvt vk u'x thvtvtthvy jd'du vpmozlkvz rzugdt, vk mdyhvy h yzdy vutyhuy tdo du pzy wzuy vk vluzohvy kh tvluvgvrhyvzu. Vk hmhuwzuuh tzu ozphu tdo tzu kvy. Vk hkkh h tzu khihmz; vk pzdvkkh du lhuy jd'vk ehtth tdo tzu gozuy, tdo tzu rzd."
+with open("Utilitaires/francais.txt", encoding="utf-8") as file:
+        words = set(line.strip() for line in file)
 
 def separer_mots(texte):
     # Separe les mots d'un texte dans une liste
@@ -13,9 +15,7 @@ def separer_mots(texte):
             mot_actuelle = ""
     return res
 
-def compter_nb_mots_francais(liste_de_mots,dictionnaire):
-    with open(dictionnaire, encoding="utf-8") as file:
-        words = set(line.strip() for line in file)
+def compter_nb_mots_francais(liste_de_mots):
     nb_mots = 0
     for mots in liste_de_mots:
         mot = str.lower(mots)
@@ -55,7 +55,7 @@ def clé_affine(texte):
     b_neg = 0
     texte_a_decode = texte
     texte_a_decode_neg = texte
-    while(compter_nb_mots_francais(separer_mots(texte_a_decode),"francais.txt") < (len(separer_mots(texte_a_decode)) / 3) and (compter_nb_mots_francais(separer_mots(texte_a_decode_neg),"francais.txt") < (len(separer_mots(texte_a_decode_neg)) / 3))):
+    while(compter_nb_mots_francais(separer_mots(texte_a_decode)) < (len(separer_mots(texte_a_decode)) / 3) and (compter_nb_mots_francais(separer_mots(texte_a_decode_neg)) < (len(separer_mots(texte_a_decode_neg)) / 3))):
         if b >= 25:
             a += 1
             while modinv(a) == "l'inverse modulaire n'existe pas":
@@ -70,7 +70,10 @@ def clé_affine(texte):
         b_neg = b_neg - 1
         texte_a_decode = decoder_affine(texte,a,b)
         texte_a_decode_neg = decoder_affine(texte,a_neg,b_neg)
-    if compter_nb_mots_francais(separer_mots(texte_a_decode),"francais.txt") > (len(separer_mots(texte_a_decode)) / 3):
+    if compter_nb_mots_francais(separer_mots(texte_a_decode)) > (len(separer_mots(texte_a_decode)) / 3):
         return (a,b)
-    if compter_nb_mots_francais(separer_mots(texte_a_decode_neg),"francais.txt") > (len(separer_mots(texte_a_decode_neg)) / 3):
+    if compter_nb_mots_francais(separer_mots(texte_a_decode_neg)) > (len(separer_mots(texte_a_decode_neg)) / 3):
         return (a_neg,b_neg)
+    
+print(a := clé_affine(text_a_decoder_1))
+print(decoder_affine(text_a_decoder_1,a[0],a[1]))
