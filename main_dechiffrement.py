@@ -9,7 +9,7 @@ texte_3 ="Sop u'dffrmtfe oz qvigpjcm, bh nnaqhd iw hcbvrl dvercy, h d'youcxlmdc 
 texte_4 = "Zc krgfkr u'le ufzxk le rzi drikzrc jli c'fscfex tyrjjzj ul mrjzjkrj.Zc flmizk jfe wizxf dlirc, zc gizk ul crzk wifzu, zc slk le xireu sfc. Zc j'rgrzjrzk. Zc j'rjjzk jli jfe tfjp, zc gizk le aflierc hl'zc gritflilk u'le rzi uzjkirzk. Zc rccldr le tzxrizccf hl'zc wldr aljhl'rl sflk hlfzhl'zc kiflmrk jfe griwld ziizkrek. Zc kfljjr."
 texte_5 ="Os dom sb kbrog : wf bok bykg-ewzbof ywm lwoxo r'wf zglmgf, hwol wf mbfug, hwol wf ygv-mkgm, hwol wf egmossgf dol bw ugwm rw pgwk. Rwmkgfe eibfmb rw Sbfndbff, Zbkzbkb wf dbrkoubs r'Bkbugf, Lmoei-Kbfrbss wf bok r' Borb."
 
-liste_T = [texte_1, texte_2, texte_3, texte_4, texte_5]
+liste_T = [texte_1, texte_2, texte_4]
 
 
 def liste_dechiffrement(texte):
@@ -40,10 +40,15 @@ def main():
     if choix == "1":
         dictionnaire_reponse ={texte_1 : None, texte_2 : None, texte_3 : None, texte_4 : None, texte_5 : None}
         t= 0
-        listD = liste_dechiffrement()
         # Tant que le texte ne comporte pas plus de trois mots dans le dictionnaire francais Utilitaires/francais.txt, on continue à déchiffrer
         for i in range(len(liste_T)):
-            while(compter_nb_mots_francais(separer_mots(liste_T[t]),"Utilitaires/francais.txt") < (len(separer_mots(liste_T[t])) / 3)):
+            listD = liste_dechiffrement(liste_T[i])
+            while(compter_nb_mots_francais(separer_mots(listD[t])),"Utilitaires/francais.txt") < (len(separer_mots(listD[t])) / 3):
+                t+=1
+            dictionnaire_reponse[liste_T[i]] = listD[t]
+            t=0
+        print(dictionnaire_reponse)
+                
                 
     
     
