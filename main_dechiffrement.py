@@ -11,25 +11,34 @@ texte_5 ="Os dom sb kbrog : wf bok bykg-ewzbof ywm lwoxo r'wf zglmgf, hwol wf mb
 
 liste_T = [texte_1, texte_2, texte_4]
 
+res = ""
+distance_min = 0
+dechiffre = []
+
+
 
 def liste_dechiffrement(texte):
-    dechiffrement = [vigenere_inverse(texte,recherche_mot_cle(texte,longueur_cle(texte))),essaie_decriptage_cle("\n\n"+texte+"\n\n")]
-    return dechiffrement
-
+    dechiffrement = [vigenere_inverse(texte,recherche_mot_cle(texte,longueur_cle(texte))),essaie_decriptage_cle(texte),affine_decode_all(texte)]
+    return dechiffrement    
     
-    
+print(liste_dechiffrement(texte_1))
     
 
 def main():
+    #importer res distance min et dechiffre
+    global res
+    global distance_min
+    global dechiffre 
     # Réalisation d'un menu d'options dans le terminal
     print("-------------------------------------------------------------")
     print("|                                                           |")
     print("|   Bienvenue dans le programme de déchiffrement de texte   |")
     print("|                                                           |")
     print("-------------------------------------------------------------")
-    print("| 1 -           Déchiffrer tous les textes                  |")
     print("|                                                           |")
-    print("| 2 -           Déchiffrer un texte                         |")
+    print("| 1 -           Déchiffrer un texte                         |")
+    print("|                                                           |")
+    print("| 2 -           Déchiffrer tous les textes                  |")
     print("|                                                           |")
     print("| 3 -          Dechiffrer un texte personnalisé             |")
     print("|                                                           |")
@@ -37,18 +46,54 @@ def main():
     print("|                                                           |")
     print("-------------------------------------------------------------")
     choix = input("Entrez votre choix : ")
+    
     if choix == "1":
-        dictionnaire_reponse ={"texte_1" : None, "texte_2" : None, "texte_3" : None, "texte_4" : None, "texte_5" : None}
-        t= 0
+        
+        texte = input("Entrez le texte à déchiffrer (1,2,3,4 ou 5) : ")
+        distance_min = distanceFreq(liste_T[int(texte)-1])
+        while texte not in ["1","2","3","4","5"]:
+            texte = input("Entrez le texte à déchiffrer (1,2,3,4 ou 5) : ")
+        dechiffre = liste_dechiffrement(liste_T[int(texte)-1])
+        res = dechiffre[0]
+        for i in range(len(dechiffre)):
+            if distanceFreq(dechiffre[i]) < distance_min:
+                distance_min = distanceFreq(dechiffre[i])
+                res = dechiffre[i]
+        
+        print("\n\n"+res.lower()+"\n\n")
+        input("Appuyez sur une touche pour continuer...")
+        main()      
+    if choix == "2":
         for i in range(len(liste_T)):
-            listD = liste_dechiffrement(liste_T[i])
-            print(compter_nb_mots_francais(separer_mots(listD[0])))
-            while(compter_nb_mots_francais(separer_mots(listD[t])) < 3):
-                t+=1
-            dictionnaire_reponse[liste_T[i]] = listD[t]
-            t=0
-    print(dictionnaire_reponse)
-                
+            dechiffre = liste_dechiffrement(liste_T[i])
+            res = dechiffre[0]
+            distance_min = distanceFreq(liste_T[i])
+
+            for i in range(len(dechiffre)):
+                if distanceFreq(dechiffre[i]) < distance_min:
+                    distance_min = distanceFreq(dechiffre[i])
+                    res = dechiffre[i]
+            
+            print("\n\n"+res.lower()+"\n\n")
+        input("Appuyez sur une touche pour continuer...")
+        main()      
+    if choix == "3":
+        texte = input("Entrez le texte à déchiffrer : ")
+        distance_min = distanceFreq(texte)
+        dechiffre = liste_dechiffrement(texte)
+        res = dechiffre[0]
+        for i in range(len(dechiffre)):
+            if distanceFreq(dechiffre[i]) < distance_min:
+                distance_min = distanceFreq(dechiffre[i])
+                res = dechiffre[i]
+        
+        print("\n\n"+res.lower()+"\n\n")
+        input("Appuyez sur une touche pour continuer...")
+        main()
+        
+    if choix == "4":
+        print("░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░\n░░░▄▄▀▀▀▀▀▄░░░░░░░░░░░░░░░░░░░░░░░░░░░░\n░░▄▀░░░░░░░▀▄░░░░░░░░░░░░░░░░░░░░░░░░░░\n░▄▀░░░▄▄░░░░▀▀▀▀▀▀▀▄▄▀▀▀▀▀▀▀▀▀▀▀▀▄▄░░░░\n░█░░░░██░░░░░░░░░░░░░░░░░░░░░░░░░░░▀▄░░\n░█░░░░██▄████▄░██▄░░░░▄██░▄████▄░░░░▀▄░\n░█░░░░██▀░░▀██▄░██▄░░██▀░██▀░▄██░░░░░█░\n░█░░░░██░░░░███░░█████▀░░██▄█▀▀░░░░░░█░\n░█░░░░███▄▄███▀░░░▀██▀░░░▀██▄▄▄██░░░░█░\n░▀▄░░░░▀▀▀▀▀▀░░░░░██▀░░░░░░▀▀▀▀▀░░░░░█░\n░░▀▄░░░░░░░░░░░░░██▀░░░▄▄░░░░░░░░░▄▄▀░░\n░░░░▀▀▀▀▀▀▀▀▀▄░░░▀▀░░░▄▀░▀▀▀▀▀▀▀▀▀░░░░░\n░░░░░░░░░░░░░▀▄░░░░░░▄▀░░░░░░░░░░░░░░░░\n░░░░░░░░░░░░░░░▀▀▀▀▀▀░░░░░░░░░░░░░░░░░░\n░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░\n")   
+           
                 
     
     

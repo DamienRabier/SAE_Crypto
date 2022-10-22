@@ -53,6 +53,7 @@ def essaie_decriptage_cle(texte_chiffre):
     return dechiffrement_cle_decalage(texte_chiffre,decal_min%26)
 
 
+
 def main():
     continuer = True
     while continuer:
