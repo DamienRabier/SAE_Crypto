@@ -13,5 +13,5 @@ def cryptage(n,g):
     # Alice envoie Yb à Bob
     y2 = pow(Ya,Kb,n)
     return (y,y2,pow(g,Kb*Ka,n))
-print(pow(2,20))
+
 print(cryptage(pow(2,50),5))
