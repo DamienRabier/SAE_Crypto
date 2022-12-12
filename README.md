@@ -22,3 +22,7 @@ Il vous offrera 4 choix possibles:
 
 Il faudra rentrer un nombre de 1 à 4 qui vous permettra de faire l'action requise.
 Ensuite il n'y a plus qu'à suivre les consignes s'affichant dans votre terminal.
+
+On n'a pas réussi a réaliser le decryptage de hill, nous n'avons pas meme eu le temps de regarder celui de substitution
+Le cryptage de hill lui est cependant fonctionnel mais la force brut de nous renvois pas le bon decryptage 
+

@@ -14,6 +14,7 @@ liste_T = [texte_1, texte_2, texte_4]
 res = ""
 distance_min = 0
 dechiffre = []
+chiffrement = ""
 
 
 
@@ -21,7 +22,6 @@ def liste_dechiffrement(texte):
     dechiffrement = [vigenere_inverse(texte,recherche_mot_cle(texte,longueur_cle(texte))),essaie_decriptage_cle(texte),affine_decode_all(texte)]
     return dechiffrement    
     
-print(liste_dechiffrement(texte_1))
     
 
 def main():
@@ -29,6 +29,7 @@ def main():
     global res
     global distance_min
     global dechiffre 
+    global chiffrement
     # Réalisation d'un menu d'options dans le terminal
     print("-------------------------------------------------------------")
     print("|                                                           |")
@@ -49,18 +50,17 @@ def main():
     
     if choix == "1":
         
-        texte = input("Entrez le texte à déchiffrer (1,2,3,4 ou 5) : ")
+        texte = input("Entrez le texte à déchiffrer (1,2 ou 3) : ")
         distance_min = distanceFreq(liste_T[int(texte)-1])
-        while texte not in ["1","2","3","4","5"]:
-            texte = input("Entrez le texte à déchiffrer (1,2,3,4 ou 5) : ")
+        while texte not in ["1","2","3"]:
+            texte = input("Entrez le texte à déchiffrer (1,2 ou 3) : ")
         dechiffre = liste_dechiffrement(liste_T[int(texte)-1])
         res = dechiffre[0]
         for i in range(len(dechiffre)):
             if distanceFreq(dechiffre[i]) < distance_min:
                 distance_min = distanceFreq(dechiffre[i])
-                res = dechiffre[i]
-        
-        print("\n\n"+res.lower()+"\n\n")
+                res = dechiffre[i]        
+        print("\n\n"+res.lower()+chiffrement+"\n\n") 
         input("Appuyez sur une touche pour continuer...")
         main()      
     if choix == "2":
@@ -73,8 +73,7 @@ def main():
                 if distanceFreq(dechiffre[i]) < distance_min:
                     distance_min = distanceFreq(dechiffre[i])
                     res = dechiffre[i]
-            
-            print("\n\n"+res.lower()+"\n\n")
+            print("\n\n"+res.lower()+"\n\n") 
         input("Appuyez sur une touche pour continuer...")
         main()      
     if choix == "3":
